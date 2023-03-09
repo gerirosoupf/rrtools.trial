@@ -1,0 +1,17 @@
+Package: rrtools.trial
+Title: Rrtools reproducible analysis setup
+Version: 0.0.0.9000
+Authors@R: 
+    person("Gerard", "Romero", , "gerard.romero02@estudiant.upf.edu", role = c("aut"))
+Description: This package does nothing, it's just a test.
+License: MIT + file LICENSE
+ByteCompile: true
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports:
+    devtools (>= 2.4.5),
+    gitcreds (>= 0.1.2),
+    rrtools (>= 0.1.5),
+    usethis (>= 2.1.6)

@@ -1,0 +1,74 @@
+---
+title: "Guidelines to a reproducible analysis"
+author: "Gerard Romero Sola"
+date: "2023-03-08"
+output: html_document
+---
+
+First, I created a github repository online, since the following command will create a local one from the one created via R. To create the repository I followed this guidelines:
+
+* Repository template: No template.
+
+* Repository name: myrepo or whatever you wish to name your new project. Approach this similar to a variable name, in code: descriptive but brief, no whitespace. Letters, digits, -, ., or _ are allowed.
+
+**IMPORTANT:**
+For further steps, since the repository is treated like a package, it's important not to use the - or _. Instead, follow this rules:
+… contain only ASCII letters, numbers, and ‘.’
+… have at least two characters
+… start with a letter (not a number)
+… not end with ‘.’
+
+* Description: “Analysis of the stuff” or any short description of the project. Write this for humans.
+
+* Public.
+
+* Initialize this repository with: Add a README file.
+
+#### Downloading the tools
+The required package to conduct this process is `rrtools`. To install it:
+```{r}
+if (!require("devtools")) install.packages("devtools")
+devtools::install_github("benmarwick/rrtools")
+```
+
+### New RStudio Project via git clone
+[Link](https://happygitwithr.com/new-github-first.html)
+I directly tried to use the `usethis::create_from_github()` command, but the credentials were wrong. To check them:
+```{r}
+gitcreds::gitcreds_set()
+```
+
+First, I checked the credentials were okay, and they were not, after selecting 3 I realised the password was wrong. So I selected 2 and replace it with the proper one.
+
+So, now that everything is correct:
+```{r}
+usethis::create_from_github(
+	"https://github.com/gerirosoupf/rrtools.trial.git",
+	destdir = "~/Desktop/Analysis/"
+)
+```
+
+There’s a big advantage to the “GitHub first, then RStudio” workflow: the remote GitHub repo is configured as the `origin` remote for your local repo and your local `main` branch is now tracking the main on GitHub. This is a technical but important point about Git. The practical implication is that you are now set up to push and pull. No need to fanny around setting up Git remotes and tracking branches on the command line.
+
+### rrtools::use_compendium("pkgname")
+
+If you started with a new project on GitHub first, run rrtools::use_compendium(), if you started with a new project in RStudio first, run rrtools::use_compendium("pkgname")
+```{r}
+rrtools::use_compendium()
+```
+
+This uses usethis::create_package() to create a basic R package in the pkgname directory, and then, if you’re using RStudio, opens the project. If you’re not using RStudio, it sets the working directory to the pkgname directory.
+we need to:
+* edit the DESCRIPTION file (located in your pkgname directory) to include accurate metadata, e.g. your ORCID and email address
+
+* periodically update the Imports: section of the DESCRIPTION file with the names of packages used in the code we write in the qmd document(s) by running rrtools::add_dependencies_to_description(). If I do it, it takes into account the packages used in this RMarkdown document.
+```{r}
+rrtools::add_dependencies_to_description()
+```
+
+
+
+
+
+
+
