@@ -66,9 +66,56 @@ we need to:
 rrtools::add_dependencies_to_description()
 ```
 
+### usethis::use_mit_license(copyright_holder = "My Name")
 
+```{r}
+usethis::use_mit_license(copyright_holder = "Gerard Romero")
+```
 
+* this adds a reference to the MIT license in the DESCRIPTION file and generates a LICENSE file listing the name provided as the copyright holder
 
+* to use a different license, replace this line with any of the licenses mentioned here: ?usethis::use_mit_license()
+
+### rrtools::use_readme_rmd()
+
+```{r}
+rrtools::use_readme_rmd()
+```
+this generates README.Rmd and renders it to README.md, ready to display on GitHub. It contains:
+
+* a template citation to show others how to cite your project. Edit this to include the correct title and DOI.
+
+* license information for the text, figures, code and data in your compendium
+
+this also adds two other markdown files: a code of conduct for users CONDUCT.md, and basic instructions for people who want to contribute to your project CONTRIBUTING.md, including for first-timers to git and GitHub.
+
+* this adds a .binder/Dockerfile that makes Binder work, if your compendium is hosted online. Currently configured for GitHub, but easily adapted for elsewhere (e.g. Zenodo, Figshare, Dataverse, etc.)
+
+* render this document after each change to refresh README.md, which is the file that GitHub displays on the repository home page (basically, change the Rmd and then knit)
+
+### rrtools::use_analysis()
+
+```{r}
+rrtools::use_analysis()
+```
+
+* this function has three location = options: top_level to create a top-level analysis/ directory, inst to create an inst/ directory (so that all the sub-directories are available after the package is installed), and vignettes to create a vignettes/ directory (and automatically update the DESCRIPTION). The default is a top-level analysis/.
+
+* for each option, the contents of the sub-directories are the same, with the following (using the default analysis/ for example):
+
+* the paper.qmd is ready to write in and render with Quarto. It includes:
+
+- a YAML header that identifies the references.bib file and the supplied csl file (to style the reference list)
+
+- a colophon that adds some git commit details to the end of the document. This means that the output file (HTML/PDF/Word) is always traceable to a specific state of the code.
+
+* the references.bib file has just one item to demonstrate the format. It is ready to insert more reference details.
+
+* you can replace the supplied csl file with a different citation style from https://github.com/citation-style-language/
+we recommend using the RStudio 2022.07 or higher to efficiently insert citations from your Zotero library while writing in an qmd file (see here for detailed setup and use information to connect your RStudio to your Zotero)
+remember that the Imports: field in the DESCRIPTION file must include the names of all packages used in analysis documents (e.g. paper.qmd). We have a helper function rrtools::add_dependencies_to_description() that will scan the qmd file, identify libraries used in there, and add them to the DESCRIPTION file.
+this function has an data_in_git = argument, which is TRUE by default. If set to FALSE you will exclude files in the data/ directory from being tracked by git and prevent them from appearing on GitHub. You should set data_in_git = FALSE if your data files are large (>100 mb is the limit for GitHub) or you do not want to make the data files publicly accessible on GitHub.
+To load your custom code in the paper.qmd, you have a few options. You can write all your R code in chunks in the qmd, that’s the simplest method. Or you can write R code in script files in /R, and include devtools::load_all(".") at the top of your paper.qmd. Or you can write functions in /R and use library(pkgname) at the top of your paper.qmd, or omit library and preface each function call with pkgname::. Up to you to choose whatever seems most natural to you.
 
 
 

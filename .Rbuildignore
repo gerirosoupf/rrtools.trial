@@ -1,3 +1,10 @@
 ^rrtools\.trial\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^README\.Rmd$
+^README-.*\.png$
+^CONDUCT\.md$
+^CONTRIBUTING\.md$
+^\.binder/Dockerfile$
+^\.binder$
+analysis
